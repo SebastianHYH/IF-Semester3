@@ -1,0 +1,57 @@
+/* Sebastian Hung Yansen */
+/* 13523070 */
+/* PraPrak_13523070.txt */
+
+/* Bagian I */
+
+/* Suami dari aihoshino */
+Query: menikah(aihoshino, X).
+    no
+
+/* Kakek buyut dan nenek buyut dari eve */
+Query: anak(eve, _parent), anak(_parent, _grandparent), anak(_grandparent, X).
+    X = qika
+    X = makio
+
+/* Paman dari orang tua francesco */
+Query: anak(francesco, _parent), anak(_parent, _grandparent), saudara(_grandparent, X), \+ saudaratiri(_grandparent, X), pria(X).
+    no
+
+/* Orang yang memiliki lebih dari satu istri */
+Query: pria(X), menikah(X, _wife1), menikah(X, _wife2), _wife1 \= _wife2.
+    X = qika
+
+/* Saudara tiri tertua dari shelby */
+Query: saudaratiri(shelby, X), \+ (saudara(X, _saudaralain), \+ saudaratiri(X, _saudaralain), \+ kakak(X, _)).
+    X = barok
+
+/* Orang tua yang memiliki tepat satu anak */
+Query: anak(_anak, X), \+ (saudara(_anak, _saudara), \+ saudaratiri(_anak, _saudara)).
+    X = qika
+    X = makio
+    X = barok
+    X = roxy
+    X = suzy
+    X = francesco
+    X = eriq
+    X = ruby
+
+/* Pria yang memiliki bertua berusia lebih dari 99 tahun */
+Query: pria(X), mertua(_mertua,X), usia(_mertua, _usia), _usia > 99.
+    X = eriq
+
+/* Orang yatim piatu dengan usia termuda */
+Query: yatimpiatu(X), \+ (yatimpiatu(_yatimlain), X \= _yatimlain, usia(X, _usiaX), usia(_yatimlain, _usiaY), _usiaX > _usiaY).
+    X = francesco
+
+/* Orang diatas 60 tahun yang statusnya menikah dengan orang yang memiliki saudara lebih dari 1 orang */
+Query: menikah(X, _pasangan), usia(X, _usia), _usia > 25, saudara(_pasangan, _saudara1), saudara(_pasangan, _saudara2), _saudara1 \= _saudara2.
+    X = roxy
+
+/* Seluruh keturunan qika yang memiliki tepat 2 keponakan */
+Query:  keturunan(X, qika), 
+        keponakan(_keponakan1, X), 
+        keponakan(_keponakan2, X), 
+        _keponakan1 \= _keponakan2, 
+        \+ (keponakan(_keponakan3, X), _keponakan3 \= _keponakan1, _keponakan3 \= _keponakan2).
+    no
